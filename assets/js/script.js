@@ -11,21 +11,35 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 console.log(data)
-                $('#tituloHeroe').text(`SuperHero encontrado`);
-                $('#imgHeroe').html(
-                    `<img src="${data.image.url}" alt="imagen heroe" class='img-fluid'>`
+                $('#card').html(
+                    ` 
+                <h2 id="tituloHeroe" class="text-center font-weight-bold"> SuperHero encontrado</h2>
+                <div class="card mt-5" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="${data.image.url}" alt="imagen heroe" class='img-fluid'>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Nombre:</span> ${data.name}</h5>
+                                <p><span class="font-weight-bold card-text">Conexiones:</span> ${data.connections["group-affiliation"]} ~ ${data.connections.relatives}</p>
+                                <p><span class="font-weight-bold card-text">Publicado:</span> ${data.biography.publisher}</p>
+                                <p><span class="font-weight-bold card-text">Ocupación:</span> ${data.work.occupation}</p>
+                                <p><span class="font-weight-bold card-text">Primera aparición:</span> ${data.biography["first-appearance"]}</p>
+                                <p><span class="font-weight-bold card-text">Altura:</span> ${data.appearance.height[0]} ~ ${data.appearance.height[1]} </p>
+                                <p><span class="font-weight-bold card-text">Peso:</span> ${data.appearance.weight[0]} ~ ${data.appearance.weight[1]}</p>
+                                <p>Alianza: ${data.biography.aliases} </p>
+                             </div>
+                        </div>
+                    </div>
+                </div> `
                 )
-                $('#resultadoHeroe').html(
-                    `<p><span class="font-weight-bold">Nombre:</span> ${data.name}</p>
-                    <p><span class="font-weight-bold">Conexiones:</span> ${data.connections["group-affiliation"]} ~ ${data.connections.relatives}</p>
-                    <p><span class="font-weight-bold">Publicado:</span> ${data.biography.publisher}</p>
-                    <p><span class="font-weight-bold">Ocupación:</span> ${data.work.occupation}</p>
-                    <p><span class="font-weight-bold">Primera aparición:</span> ${data.biography["first-appearance"]}</p>
-                    <p><span class="font-weight-bold">Altura:</span> ${data.appearance.height[0]} ~ ${data.appearance.height[1]} </p>
-                    <p><span class="font-weight-bold">Peso:</span> ${data.appearance.weight[0]} ~ ${data.appearance.weight[1]}</p>
-                    <p>Alianza: ${data.biography.aliases} </p>`
-
-                )
+                // Recorriendo estadisticas
+                const PowerStats = data.powerstats;
+                const datePoints = [];
+                for (keys in PowerStats) {
+                    datePoints.push({ y: parseInt(PowerStats[keys]) || 0, label: keys })
+                }
                 // canvas
                 var chart = new CanvasJS.Chart("chartContainer", {
                     animationEnabled: true,
@@ -47,14 +61,7 @@ $(document).ready(function () {
                         legendText: "{label}",
                         indexLabelFontSize: 16,
                         indexLabel: "{label} - {y}%",
-                        dataPoints: [
-                            { label: "Inteligencia", y: parseInt(data.powerstats.intelligence) },
-                            { label: "Fuerza", y: parseInt(data.powerstats.strength) },
-                            { label: "Velocidad", y: parseInt(data.powerstats.speed) },
-                            { label: "Durabilidad", y: parseInt(data.powerstats.durability) },
-                            { label: "Poder", y: parseInt(data.powerstats.power) },
-                            { label: "Combate", y: parseInt(data.powerstats.combat) },
-                        ]
+                        dataPoints: datePoints
                     }]
                 });
                 chart.render();
