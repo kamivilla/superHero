@@ -28,7 +28,7 @@ $(document).ready(function () {
                                 <p><span class="font-weight-bold card-text">Primera aparición:</span> ${data.biography["first-appearance"]}</p>
                                 <p><span class="font-weight-bold card-text">Altura:</span> ${data.appearance.height[0]} ~ ${data.appearance.height[1]} </p>
                                 <p><span class="font-weight-bold card-text">Peso:</span> ${data.appearance.weight[0]} ~ ${data.appearance.weight[1]}</p>
-                                <p>Alianza: ${data.biography.aliases} </p>
+                                <p><span class="font-weight-bold card-text">Alianza:</span> ${data.biography.aliases} </p>
                              </div>
                         </div>
                     </div>
