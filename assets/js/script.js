@@ -44,7 +44,7 @@ $(document).ready(function () {
                 var chart = new CanvasJS.Chart("chartContainer", {
                     animationEnabled: true,
                     title: {
-                        text: `Estadisticas de poder de ${data.name}`,
+                        text: `Estadísticas de poder de ${data.name}`,
                         fontColor: "whitesmoke",
 
                     },
